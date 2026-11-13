@@ -1,0 +1,5 @@
+-r requirements.txt
+# Optional historical-data and GARCH workflows; not validated in this environment
+pandas>=2,<3
+yfinance>=0.2,<1
+arch>=7,<9
