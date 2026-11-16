@@ -1,0 +1,7 @@
+{
+  "numpy_version": "2.3.5",
+  "tests_passed": 5,
+  "data": "entirely synthetic",
+  "garch_parameter_estimation": false,
+  "report_regenerated": true
+}

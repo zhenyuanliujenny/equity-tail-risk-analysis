@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Volatility and Tail Risk Demo</title><style>*{box-sizing:border-box}body{margin:0;background:#f5f7f8;color:#1f303e;
+    font:16px/1.65 system-ui,-apple-system,sans-serif}main{max-width:960px;
+    margin:auto;padding:45px 28px}h1{font-size:43px;line-height:1.13;letter-spacing:-1px}
+    h2{font-size:25px;line-height:1.3}.eyebrow{color:#146e72;font-size:12px;
+    letter-spacing:1.5px;font-weight:700}.lead{font-size:20px;color:#536674}
+    section{margin:24px 0;background:white;border:1px solid #dde5e8;
+    border-radius:10px;padding:25px 30px}.notice{border-left:4px solid #168086;
+    background:#eaf4f3;padding:15px 20px}a{color:#126d73;text-underline-offset:3px}
+    table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:11px 9px;
+    text-align:left;border-bottom:1px solid #dbe3e7}th{background:#edf3f5}
+    svg{width:100%;height:auto}.tablewrap{overflow-x:auto}code{font-size:13px}
+    footer{font-size:13px;color:#596e7a}@media(max-width:600px){main{padding:25px 15px}
+    section{padding:20px 16px}h1{font-size:33px}}</style></head><body><main><p class="eyebrow">INDEPENDENT TECHNICAL DEMO · PYTHON · NUMPY</p>
+    <h1>Exploring volatility and tail risk</h1>
+    <p class="lead">A reproducible, synthetic demonstration of GARCH dynamics,
+    empirical tail measures and one-day GBM Monte Carlo simulation.</p>
+    <div class="notice"><strong>All observations and results are synthetic.</strong>
+    No real equities, company data, research deliverables or news text are used.
+    This is a newly created personal methods demonstration.</div>
+    <section><h2>What the demonstration implements</h2>
+    <ul><li>Generate three anonymous return series, each with 1,500 daily steps,
+    using a stationary Gaussian GARCH(1,1) recursion.</li>
+    <li>Compute empirical 99% lower-return quantiles (VaR convention) and
+    inclusive-threshold tail means (CVaR / Expected Shortfall convention).</li>
+    <li>Generate 10,000 one-day GBM draws per series using daily sample moments,
+    then compare quantiles and tail means on the same horizon.</li></ul>
+    <p>GARCH parameters are specified to generate data; they are not estimated.
+    The volatility curve below is known generating volatility, not a fitted
+    estimate or a forecast.</p></section>
+    <section><h2>Known conditional volatility changes over time</h2>
+    <p>Synthetic B · last 250 generated steps · decimal daily volatility.</p>
+    <svg viewBox="0 0 800 250" role="img" aria-label="Generating daily conditional volatility for Synthetic B over 250 simulated steps">
+    <line x1="40" y1="205" x2="760" y2="205" stroke="#9aadb6"/>
+    <polyline points="40.00,74.01 42.89,77.25 45.78,76.71 48.67,80.12 51.57,79.96 54.46,66.51 57.35,61.85 60.24,58.19 63.13,60.15 66.02,63.41 68.92,68.15 71.81,72.81 74.70,77.01 77.59,76.00 80.48,67.22 83.37,71.98 86.27,76.42 89.16,76.73 92.05,79.20 94.94,79.86 97.83,64.22 100.72,68.67 103.61,72.86 106.51,74.01 109.40,61.58 112.29,66.28 115.18,54.91 118.07,47.06 120.96,52.68 123.86,56.77 126.75,58.31 129.64,61.69 132.53,66.31 135.42,71.08 138.31,75.44 141.20,75.63 144.10,77.27 146.99,75.68 149.88,78.64 152.77,63.80 155.66,65.03 158.55,67.33 161.45,69.05 164.34,73.60 167.23,77.79 170.12,80.91 173.01,84.64 175.90,85.80 178.80,85.84 181.69,86.54 184.58,89.82 187.47,84.07 190.36,71.53 193.25,75.37 196.14,78.90 199.04,73.73 201.93,75.08 204.82,70.15 207.71,68.79 210.60,65.40 213.49,67.65 216.39,69.25 219.28,73.83 222.17,76.08 225.06,70.02 227.95,69.24 230.84,73.70 233.73,71.87 236.63,71.07 239.52,68.37 242.41,72.87 245.30,77.07 248.19,78.24 251.08,80.89 253.98,80.83 256.87,77.18 259.76,79.94 262.65,79.02 265.54,73.30 268.43,74.84 271.33,58.41 274.22,57.85 277.11,63.20 280.00,65.16 282.89,69.79 285.78,74.37 288.67,75.98 291.57,73.02 294.46,75.47 297.35,79.47 300.24,79.60 303.13,72.98 306.02,56.48 308.92,59.36 311.81,62.31 314.70,67.35 317.59,60.62 320.48,63.11 323.37,65.35 326.27,65.28 329.16,67.61 332.05,65.87 334.94,70.22 337.83,67.01 340.72,69.53 343.61,74.10 346.51,63.31 349.40,53.28 352.29,58.54 355.18,63.86 358.07,60.74 360.96,61.73 363.86,64.48 366.75,69.40 369.64,72.44 372.53,71.01 375.42,69.41 378.31,67.25 381.20,70.83 384.10,69.14 386.99,54.15 389.88,55.70 392.77,60.64 395.66,54.64 398.55,58.02 401.45,63.14 404.34,67.98 407.23,63.01 410.12,67.58 413.01,72.10 415.90,65.31 418.80,68.44 421.69,72.90 424.58,75.92 427.47,76.83 430.36,80.66 433.25,81.74 436.14,84.95 439.04,87.29 441.93,82.63 444.82,85.78 447.71,89.07 450.60,88.68 453.49,77.21 456.39,80.60 459.28,84.25 462.17,87.73 465.06,91.01 467.95,89.76 470.84,91.38 473.73,88.55 476.63,69.34 479.52,64.19 482.41,61.74 485.30,64.14 488.19,68.50 491.08,53.98 493.98,52.31 496.87,56.32 499.76,61.64 502.65,65.83 505.54,70.68 508.43,74.74 511.33,69.37 514.22,73.95 517.11,73.84 520.00,77.63 522.89,78.74 525.78,80.38 528.67,81.59 531.57,85.31 534.46,87.36 537.35,74.25 540.24,72.32 543.13,73.48 546.02,61.79 548.92,51.58 551.81,56.23 554.70,47.04 557.59,45.00 560.48,50.89 563.37,52.72 566.27,55.30 569.16,57.56 572.05,62.71 574.94,60.02 577.83,64.76 580.72,69.69 583.61,67.74 586.51,70.29 589.40,73.67 592.29,76.65 595.18,75.62 598.07,52.63 600.96,52.16 603.86,57.90 606.75,56.76 609.64,51.93 612.53,57.70 615.42,57.57 618.31,62.66 621.20,62.81 624.10,67.52 626.99,71.89 629.88,74.96 632.77,78.32 635.66,81.02 638.55,83.70 641.45,68.75 644.34,64.02 647.23,68.88 650.12,71.64 653.01,75.21 655.90,79.13 658.80,75.83 661.69,67.58 664.58,70.12 667.47,74.21 670.36,72.42 673.25,75.88 676.14,78.63 679.04,81.47 681.93,84.57 684.82,66.76 687.71,71.44 690.60,62.07 693.49,64.99 696.39,65.66 699.28,70.10 702.17,69.96 705.06,74.15 707.95,77.38 710.84,81.44 713.73,82.93 716.63,82.70 719.52,85.93 722.41,87.48 725.30,89.35 728.19,92.55 731.08,91.23 733.98,93.58 736.87,91.20 739.76,93.21 742.65,73.74 745.54,77.97 748.43,81.03 751.33,74.03 754.22,76.34 757.11,68.31 760.00,69.66" fill="none" stroke="#168086" stroke-width="2"/>
+    <text x="40" y="230" font-size="13">Simulated step 1</text>
+    <text x="640" y="230" font-size="13">Simulated step 250</text>
+    <text x="40" y="25" font-size="13">Curve maximum: 0.0130 · baseline: 0</text>
+    </svg><p>The path illustrates the variance recursion, where recent squared
+    returns and prior variance affect the next conditional variance. It is not
+    a reconstruction of an observed market event.</p></section>
+    <section><h2>Empirical and simulated tails need not agree</h2>
+    <div class="tablewrap"><table><thead><tr><th>Synthetic series</th>
+    <th>Empirical VaR</th><th>Empirical CVaR</th><th>GBM VaR</th><th>GBM CVaR</th>
+    </tr></thead><tbody><tr><td>Synthetic A</td><td>-1.45%</td><td>-1.66%</td><td>-1.43%</td><td>-1.62%</td></tr><tr><td>Synthetic B</td><td>-3.81%</td><td>-4.84%</td><td>-3.28%</td><td>-3.81%</td></tr><tr><td>Synthetic C</td><td>-5.47%</td><td>-7.30%</td><td>-4.26%</td><td>-4.85%</td></tr></tbody></table></div>
+    <p>All values are signed daily returns at the 99% confidence convention.
+    Negative values represent losses. CVaR averages returns at or below the
+    sample quantile; it is not a bound on the worst possible loss.</p>
+    <p>The empirical sample has time-varying generating variance; the GBM
+    comparator uses constant unconditional daily moments. Differences reflect
+    both modeling assumptions and finite simulation/sample variability, not a
+    verified performance advantage.</p>
+    <p><a href="synthetic_results.csv">Download generated results and parameters</a></p>
+    </section><section><h2>Reproducibility and limitations</h2>
+    <p>Fixed random seeds are recorded alongside the results. The data generator,
+    report builder and five unit tests are included. No network access or account
+    credentials are needed to run the demo.</p>
+    <ul><li>No GARCH parameter estimation, residual testing or held-out forecast
+    evaluation is implemented.</li><li>No real-company outcomes, portfolio
+    diversification model, language processing or trading execution is shown.</li>
+    <li>Normal-shock assumptions and the GBM moment approximation are deliberate
+    simplifications. More scenarios do not eliminate model risk.</li>
+    <li>The results demonstrate method behavior, not real asset risk or
+    investment performance.</li></ul></section>
+    <section><h2>Read or reproduce</h2><p><a href="../README.md">Project overview</a>
+    · <a href="../src/demo.py">Data generation and risk methods</a>
+    · <a href="../tests/test_demo.py">Tests</a></p>
+    <p><code>python src/build_report.py</code> regenerates this report and its
+    CSV/JSON assets from the synthetic process.</p></section>
+    <footer>Independent statistical methods demonstration · All data synthetic</footer></main></body></html>
